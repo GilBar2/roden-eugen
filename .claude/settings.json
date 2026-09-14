@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git pull)",
+      "Bash(git pull *)",
+      "Bash(python3 tools/commons_search.py *)",
+      "Bash(python3 tools/build_desk.py *)",
+      "Bash(python3 tools/md_to_html.py *)",
+      "mcp__claude-in-chrome"
+    ]
+  }
+}

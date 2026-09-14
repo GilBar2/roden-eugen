@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roden Eugen Picture Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root {
+  --paper:  #e9eaec;
+  --card:   #ffffff;
+  --ink:    #14171a;
+  --muted:  #6a7077;
+  --rule:   #ced2d6;
+  --accent: #8c2f24;
+  --ok:     #2f5d50;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:  #14171a;
+    --card:   #1c2024;
+    --ink:    #e7e9eb;
+    --muted:  #949aa1;
+    --rule:   #2f353a;
+    --accent: #cd6759;
+    --ok:     #74ac9b;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:  #14171a;
+  --card:   #1c2024;
+  --ink:    #e7e9eb;
+  --muted:  #949aa1;
+  --rule:   #2f353a;
+  --accent: #cd6759;
+  --ok:     #74ac9b;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-block: 40px 96px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.wrap { max-width: 940px; margin: 0 auto; }
+
+/* ---------- masthead ---------- */
+
+.masthead { border-bottom: 2px solid var(--ink); padding-bottom: 18px; margin-bottom: 40px; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 10px 0 12px;
+  text-wrap: balance;
+}
+
+.standfirst { max-width: 62ch; color: var(--muted); font-size: 16.5px; }
+.standfirst strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- article block ---------- */
+
+.article { margin-top: 52px; }
+
+.article-head {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 12px;
+  margin-bottom: 26px;
+}
+
+.article-head h2 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(19px, 2.6vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 7px 0 0;
+  text-wrap: balance;
+}
+
+.spec {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.spec b { color: var(--ink); font-weight: 500; }
+
+/* ---------- plate ---------- */
+
+.plates { display: flex; flex-direction: column; gap: 26px; }
+
+.plate {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 22px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  padding: 18px;
+  margin: 0;
+  align-items: start;
+}
+
+.plate.is-dropped { opacity: 0.44; }
+
+.shot { margin: 0; position: relative; }
+
+.shot img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+
+.tag {
+  position: absolute;
+  top: 0; left: 0;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  padding: 5px 9px;
+}
+.tag[hidden] { display: none !important; }
+
+.caption { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+.why { margin: 0; font-size: 15.5px; max-width: 46ch; }
+
+.prov {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.65;
+  color: var(--muted);
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+  overflow-wrap: anywhere;
+}
+.prov a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.prov a:hover { color: var(--ink); }
+.lic { color: var(--ok); font-weight: 500; }
+
+/* ---------- controls ---------- */
+
+.controls { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+
+.ctl {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--muted);
+  user-select: none;
+}
+.ctl input { accent-color: var(--accent); width: 15px; height: 15px; margin: 0; cursor: pointer; }
+.ctl input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ctl:has(input:checked) { color: var(--ink); }
+
+/* ---------- footer bar ---------- */
+
+.bar {
+  margin-top: 52px;
+  border-top: 2px solid var(--ink);
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tally { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tally .line { display: block; }
+.tally b { color: var(--ink); font-weight: 500; }
+.tally .bad { color: var(--accent); font-weight: 500; }
+
+.approve-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+
+.confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+.confirm input { accent-color: var(--ok); width: 17px; height: 17px; margin: 0; cursor: pointer; }
+.confirm input:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
+
+button {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: #fff; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.status {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted);
+  min-height: 1.7em;
+}
+.status.saved { color: var(--ok); }
+.status.err { color: var(--accent); }
+
+@media (max-width: 720px) {
+  .plate { grid-template-columns: 1fr; gap: 16px; }
+  .bar { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Roden Eugen &middot; Image selection &middot; 8 plates</div>
+    <h1>Picture Desk</h1>
+    <p class="standfirst">
+      Eight plates chosen for the three live posts, sized to each piece by length.
+      Every file is <strong>public domain</strong>, sourced from Wikimedia Commons.
+      Untick anything you want dropped, move a thumbnail if you disagree, then tick
+      <strong>Approve</strong> and save.
+    </p>
+  </header>
+
+  <div id="articles"></div>
+
+  <div class="bar">
+    <div class="tally" id="tally"></div>
+    <div class="approve-row">
+      <label class="confirm" for="confirm-all">
+        <input type="checkbox" id="confirm-all">
+        <span>Approve this selection</span>
+      </label>
+      <button id="save" disabled>Save approval</button>
+    </div>
+  </div>
+  <div class="status" id="status"></div>
+
+</div>
+
+<script>
+const ARTICLES = [
+  {
+    key: "european-political-landscape",
+    title: "European Political Landscape",
+    date: "28 Mar 2026",
+    words: 324,
+    images: [
+      {
+        id: "eu-1",
+        file: "img/eu-1-berlin-wall.jpg",
+        commons: "Crane removed part of Wall Brandenburg Gate.jpg",
+        alt: "A crane lifting away a section of the Berlin Wall beside the Brandenburg Gate in 1989.",
+        thumb: true,
+        why: "The piece opens on the Fukuyama syndrome, the belief that history had ended. This is that belief's founding image: the Wall being lifted away at the Brandenburg Gate in 1989."
+      },
+      {
+        id: "eu-2",
+        file: "img/eu-2-nato-wales.jpg",
+        commons: "President Obama, Secretary Kerry, European Leaders Chat Before Ukraine Meeting at NATO Summit in Wales (14950723840).jpg",
+        alt: "Obama, Kerry and European leaders talking before the Ukraine meeting at the 2014 NATO summit in Wales.",
+        thumb: false,
+        why: "Set deliberately against the first plate. This is the 2014 NATO summit convened over Ukraine, months after Crimea. The article's charge is that Europe stood in exactly this room and still did not wake up."
+      }
+    ]
+  },
+  {
+    key: "us-economy-national-debt",
+    title: "The Stability of the U.S. Economy and the Role of National Debt",
+    date: "15 Feb 2026",
+    words: 962,
+    images: [
+      {
+        id: "us-1",
+        file: "img/us-1-eccles.jpg",
+        commons: "Eccles Building (26088200676).jpg",
+        alt: "The Marriner S. Eccles Federal Reserve Board building in Washington, D.C.",
+        thumb: false,
+        why: "The Federal Reserve holds roughly $7 trillion of the debt this piece anatomises. Its headquarters is the most legible single image for an article whose spine is the Fed balance sheet."
+      },
+      {
+        id: "us-2",
+        file: "img/us-2-fomc.jpg",
+        commons: "Federal Open Market Committee (FOMC) in Washington DC April 26-27, 2016.jpg",
+        alt: "Members of the Federal Open Market Committee seated around the table in Washington, D.C.",
+        thumb: false,
+        why: "For the quantitative easing section: the actual room where the asset purchases described in the article get decided. It puts a table and a dozen people behind an abstract number."
+      },
+      {
+        id: "us-3",
+        file: "img/us-3-currency-sheet.jpg",
+        commons: "United States Two Dollar Uncut 32-Subject Currency Sheet.jpg",
+        alt: "An uncut 32-subject sheet of United States two dollar bills.",
+        thumb: true,
+        why: "For the line about Treasury purchases creating matching liabilities in newly created money. Currency photographed before it is cut apart reads as issuance rather than as earnings."
+      }
+    ]
+  },
+  {
+    key: "why-russia-achieves-so-little",
+    title: "Why Russia Achieves So Little With So Much",
+    date: "7 Dec 2025",
+    words: 922,
+    images: [
+      {
+        id: "ru-2",
+        file: "img/ru-2-spinning-yarn.jpg",
+        commons: "Russian woman spinning yarn, Izvedovo village (by Sergei Prokudin-Gorskii, 1910).jpg",
+        alt: "A Russian woman spinning yarn outside a wooden house in Izvedovo village, photographed in colour in 1910.",
+        thumb: true,
+        why: "Carries the section 2 claim, military might alongside household poverty, in one frame. Prokudin-Gorsky's colour plates of the Russian Empire are the rare archival set that still looks contemporary, which stops the point reading as history."
+      },
+      {
+        id: "ru-4",
+        file: "img/ru-4-tolstoy.jpg",
+        commons: "L.N.Tolstoy Prokudin-Gorsky.jpg",
+        alt: "Leo Tolstoy photographed in colour by Prokudin-Gorsky at Yasnaya Polyana in 1908.",
+        thumb: false,
+        why: "Replaces the dropped Red Square plate. Section 4 is the cultural argument, Tolstoy named in its first line, and it was the one stretch of the piece with no image. Prokudin-Gorsky shot this in 1908, so it pairs with the spinning woman as one body of work rather than two stock choices."
+      },
+      {
+        id: "ru-3",
+        file: "img/ru-3-soyuz.jpg",
+        commons: "Soyuz TMA-05M rocket launches from Baikonur 4.jpg",
+        alt: "A Soyuz rocket lifting off from the Baikonur Cosmodrome.",
+        thumb: false,
+        why: "For the nuclear and space programmes in section 1, and for the closing line that Russia could have led in science and space. The achievement and the waste sit in the same object."
+      }
+    ]
+  }
+];
+
+const quota = w => w < 500 ? 2 : (w < 1200 ? 3 : 4);
+const commonsUrl = f => "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.replace(/ /g, "_"));
+
+const state = {};
+ARTICLES.forEach(a => {
+  state[a.key] = {
+    use: new Set(a.images.map(i => i.id)),
+    thumb: (a.images.find(i => i.thumb) || a.images[0]).id
+  };
+});
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+function render() {
+  document.getElementById("articles").innerHTML = ARTICLES.map(a => `
+    <section class="article">
+      <div class="article-head">
+        <div class="spec">${esc(a.date)} &nbsp;/&nbsp; <b>${a.words}</b> words &nbsp;/&nbsp; <b>${quota(a.words)}</b> plates</div>
+        <h2>${esc(a.title)}</h2>
+      </div>
+      <div class="plates">
+        ${a.images.map(img => `
+          <figure class="plate" id="plate-${img.id}">
+            <div class="shot">
+              <img src="${img.file}" alt="${esc(img.alt)}" loading="lazy">
+              <span class="tag" id="tag-${img.id}" hidden>THUMBNAIL</span>
+            </div>
+            <figcaption class="caption">
+              <p class="why">${esc(img.why)}</p>
+              <div class="controls">
+                <label class="ctl" for="use-${img.id}">
+                  <input type="checkbox" id="use-${img.id}" data-art="${a.key}" data-img="${img.id}" data-role="use">
+                  <span>Use</span>
+                </label>
+                <label class="ctl" for="thumb-${img.id}">
+                  <input type="radio" id="thumb-${img.id}" name="thumb-${a.key}" data-art="${a.key}" data-img="${img.id}" data-role="thumb">
+                  <span>Thumbnail</span>
+                </label>
+              </div>
+              <div class="prov">
+                <span class="lic">Public domain</span> &middot; Wikimedia Commons<br>
+                <a href="${commonsUrl(img.commons)}" target="_blank" rel="noopener noreferrer">${esc(img.commons)}</a>
+              </div>
+            </figcaption>
+          </figure>
+        `).join("")}
+      </div>
+    </section>
+  `).join("");
+
+  document.querySelectorAll('input[data-role]').forEach(el => {
+    el.addEventListener("change", onToggle);
+  });
+  syncDom();
+}
+
+function onToggle(e) {
+  const { art, img, role } = e.target.dataset;
+  const s = state[art];
+  if (role === "use") {
+    if (e.target.checked) {
+      s.use.add(img);
+    } else {
+      s.use.delete(img);
+      if (s.thumb === img) s.thumb = [...s.use][0] || null;
+    }
+  } else {
+    s.thumb = img;
+    s.use.add(img);
+  }
+  syncDom();
+}
+
+function syncDom() {
+  ARTICLES.forEach(a => {
+    const s = state[a.key];
+    a.images.forEach(img => {
+      const used = s.use.has(img.id);
+      const isThumb = s.thumb === img.id;
+      document.getElementById("use-" + img.id).checked = used;
+      document.getElementById("thumb-" + img.id).checked = isThumb;
+      document.getElementById("tag-" + img.id).hidden = !isThumb;
+      document.getElementById("plate-" + img.id).classList.toggle("is-dropped", !used);
+    });
+  });
+  updateTally();
+}
+
+function problems() {
+  const out = [];
+  ARTICLES.forEach(a => {
+    const s = state[a.key];
+    const n = s.use.size;
+    if (n < 2) out.push(`${a.title}: needs at least 2`);
+    else if (n > 4) out.push(`${a.title}: more than 4`);
+    if (!s.thumb || !s.use.has(s.thumb)) out.push(`${a.title}: no thumbnail`);
+  });
+  return out;
+}
+
+function updateTally() {
+  const bad = problems();
+  document.getElementById("tally").innerHTML = ARTICLES.map(a => {
+    const s = state[a.key];
+    const t = a.images.find(i => i.id === s.thumb);
+    return `<span class="line"><b>${s.use.size}</b> / ${quota(a.words)} plates &nbsp; thumb: <b>${t ? esc(t.commons.slice(0, 34)) : "none"}</b> &nbsp; ${esc(a.title.slice(0, 34))}</span>`;
+  }).join("") + (bad.length ? `<span class="line bad">${esc(bad.join(" | "))}</span>` : "");
+
+  const confirmed = document.getElementById("confirm-all").checked;
+  document.getElementById("save").disabled = bad.length > 0 || !confirmed;
+}
+
+function payload() {
+  const articles = {};
+  ARTICLES.forEach(a => {
+    const s = state[a.key];
+    articles[a.key] = {
+      title: a.title,
+      date: a.date,
+      words: a.words,
+      thumbnail: s.thumb,
+      use: a.images.filter(i => s.use.has(i.id)).map(i => ({ id: i.id, commons: i.commons })),
+      dropped: a.images.filter(i => !s.use.has(i.id)).map(i => i.id)
+    };
+  });
+  return { status: "approved", confirmedAt: new Date().toISOString(), articles };
+}
+
+const statusEl = document.getElementById("status");
+function setStatus(msg, cls) {
+  statusEl.textContent = msg;
+  statusEl.className = "status" + (cls ? " " + cls : "");
+}
+
+document.getElementById("confirm-all").addEventListener("change", updateTally);
+
+let dbPromise = null;
+document.getElementById("save").addEventListener("click", async () => {
+  const btn = document.getElementById("save");
+  btn.disabled = true;
+  setStatus("Saving...");
+  try {
+    dbPromise = dbPromise || window.claude?.use?.("db");
+    const db = await dbPromise;
+    if (!db) {
+      setStatus("Could not reach storage from this view. Your picks are set on screen, so just reply \"approved\" in chat and Claude will use what is shown here.", "err");
+      btn.disabled = false;
+      return;
+    }
+    await db.doc("approvals/selections").set(payload());
+    setStatus("Approval saved. Claude can read it now, so tell it to go ahead and place the images.", "saved");
+  } catch (err) {
+    setStatus("Save failed (" + (err?.code || err?.message || "unknown") + "). Reply \"approved\" in chat instead and Claude will use the picks shown here.", "err");
+    btn.disabled = false;
+  }
+});
+
+render();
+
+if (!window.claude) {
+  document.querySelector(".standfirst").innerHTML =
+    "The final selection, placed on the three live posts on 14 September 2026 and sized to each piece by length. Every file is <strong>public domain</strong>, sourced from Wikimedia Commons.";
+  document.querySelector(".eyebrow").innerHTML = "Roden Eugen &middot; Final image selection &middot; 8 plates";
+  document.querySelectorAll(".controls, .bar, #status").forEach(el => { el.hidden = true; });
+}
+</script>
+
+</html>

@@ -1,0 +1,398 @@
+<title>__TITLE__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root {
+  --paper: #e9eaec; --card: #ffffff; --ink: #14171a; --muted: #6a7077;
+  --rule: #ced2d6; --accent: #8c2f24; --ok: #2f5d50; --wash: #f4f0ee;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #14171a; --card: #1c2024; --ink: #e7e9eb; --muted: #949aa1;
+    --rule: #2f353a; --accent: #cd6759; --ok: #74ac9b; --wash: #2a2322;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #14171a; --card: #1c2024; --ink: #e7e9eb; --muted: #949aa1;
+  --rule: #2f353a; --accent: #cd6759; --ok: #74ac9b; --wash: #2a2322;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--serif); font-size: 16px; line-height: 1.55;
+  padding-block: 40px 96px; padding-left: 20px; padding-right: 20px;
+}
+.wrap { max-width: 940px; margin: 0 auto; }
+.masthead { border-bottom: 2px solid var(--ink); padding-bottom: 18px; }
+.eyebrow, .spec, .where, .prov, .count, .tally, .status, .btn, .radio {
+  font-family: var(--mono);
+}
+.eyebrow { font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
+h1 {
+  font-family: var(--sans); font-weight: 700; font-size: clamp(28px, 5vw, 42px);
+  line-height: 1.05; letter-spacing: -0.02em; margin: 10px 0 12px; text-wrap: balance;
+}
+.standfirst { max-width: 62ch; color: var(--muted); font-size: 16.5px; margin: 0; }
+.standfirst strong { color: var(--ink); font-weight: 600; }
+.banner {
+  margin-top: 22px; padding: 10px 14px; border-left: 3px solid var(--ok);
+  background: var(--card); font-family: var(--mono); font-size: 12px; color: var(--ok);
+}
+.article { margin-top: 52px; }
+.article-head { border-bottom: 1px solid var(--rule); padding-bottom: 12px; margin-bottom: 26px; }
+.article-head h2 {
+  font-family: var(--sans); font-weight: 600; font-size: clamp(19px, 2.6vw, 24px);
+  line-height: 1.2; letter-spacing: -0.01em; margin: 7px 0 0; text-wrap: balance;
+}
+.spec { font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.spec b { color: var(--ink); font-weight: 500; }
+.plates { display: flex; flex-direction: column; gap: 26px; }
+.plate {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 22px;
+  background: var(--card); border: 1px solid var(--rule); padding: 18px; margin: 0; align-items: start;
+}
+.plate.is-removed .shot, .plate.is-removed .why { opacity: 0.35; }
+.plate.is-new { background: var(--wash); }
+.shot { margin: 0; position: relative; }
+.shot img {
+  display: block; width: 100%; max-width: 100%; aspect-ratio: 3 / 2; object-fit: contain;
+  background: var(--paper); border: 1px solid var(--rule);
+}
+.newnote {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 16px;
+  background: color-mix(in srgb, var(--wash) 88%, transparent);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--accent);
+}
+.tag {
+  position: absolute; top: 0; left: 0; background: var(--accent); color: #fff;
+  font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.13em; padding: 5px 9px;
+}
+.caption { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.where { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); overflow-wrap: anywhere; }
+.where b { color: var(--ink); font-weight: 500; text-transform: none; letter-spacing: 0; }
+.why { margin: 0; font-size: 15.5px; max-width: 46ch; }
+.prov {
+  font-size: 11px; line-height: 1.65; color: var(--muted);
+  border-top: 1px solid var(--rule); padding-top: 10px; overflow-wrap: anywhere;
+}
+.prov a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.prov a:hover { color: var(--ink); }
+.lic { color: var(--ok); font-weight: 500; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; }
+.count { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; margin-left: auto; font-variant-numeric: tabular-nums; }
+.btn {
+  font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 9px 14px; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer;
+}
+.btn:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
+.btn:focus-visible, .radio input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn.primary { background: var(--ink); color: var(--paper); padding: 13px 24px; font-size: 12px; }
+.btn.primary:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.warn { border-color: var(--accent); color: var(--accent); }
+.btn.warn:hover:not(:disabled) { background: var(--accent); color: #fff; }
+.radio {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; letter-spacing: 0.06em;
+  text-transform: uppercase; cursor: pointer; color: var(--muted); user-select: none;
+}
+.radio input { accent-color: var(--accent); width: 15px; height: 15px; margin: 0; cursor: pointer; }
+.radio:has(input:checked) { color: var(--ink); }
+.radio:has(input:disabled) { opacity: 0.4; cursor: not-allowed; }
+.bar {
+  margin-top: 52px; border-top: 2px solid var(--ink); padding-top: 20px;
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+}
+.tally { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tally .line { display: block; }
+.tally b { color: var(--ink); font-weight: 500; }
+.tally .bad { color: var(--accent); font-weight: 500; }
+.status { margin-top: 16px; font-size: 13px; line-height: 1.7; color: var(--muted); min-height: 1.7em; }
+.status.saved { color: var(--ok); }
+.status.err { color: var(--accent); }
+.status kbd {
+  font-family: var(--mono); font-size: 13px; background: var(--card); border: 1px solid var(--rule);
+  padding: 1px 7px; color: var(--ink);
+}
+.fallback { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+.fallback textarea {
+  width: 100%; min-height: 110px; font-family: var(--mono); font-size: 11px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--rule); padding: 10px; resize: vertical;
+}
+@media (max-width: 720px) {
+  .plate { grid-template-columns: 1fr; gap: 16px; }
+  .bar { flex-direction: column; align-items: flex-start; }
+  .count { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1>Picture Desk</h1>
+    <p class="standfirst" id="standfirst"></p>
+    <div class="banner" id="banner" hidden></div>
+  </header>
+
+  <div id="articles"></div>
+
+  <div class="bar" id="bar">
+    <div class="tally" id="tally"></div>
+    <button class="btn primary" id="approve" type="button" disabled>Approve</button>
+  </div>
+  <div class="status" id="status"></div>
+  <div class="fallback" id="fallback" hidden>
+    <textarea id="fallback-text" readonly></textarea>
+    <div><button class="btn" id="copy" type="button">Copy</button></div>
+  </div>
+</div>
+
+<script>
+const DESK = /*__DESK_DATA__*/null;
+const RECORD = DESK.mode === "record";
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const commonsUrl = c => c.page || ("https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(String(c.commons).replace(/ /g, "_")));
+const limits = a => ({ min: a.minImages ?? 2, max: a.maxImages ?? 4 });
+
+const state = {};
+DESK.articles.forEach(a => {
+  const slots = {};
+  a.slots.forEach(s => { slots[s.id] = { idx: 0, removed: false, needsNew: false }; });
+  state[a.key] = { slots, thumb: (a.slots.find(s => s.thumb) || a.slots[0]).id };
+});
+
+function render() {
+  const plateCount = DESK.articles.reduce((n, a) => n + a.slots.length, 0);
+  $("eyebrow").innerHTML = `${esc(DESK.publication || "Roden Eugen")} &middot; ${RECORD ? "Final image selection" : "Image selection"} &middot; ${plateCount} plates`;
+  $("standfirst").innerHTML = RECORD
+    ? `The final selection for ${DESK.articles.length === 1 ? "this post" : "these posts"}. Every file is <strong>public domain</strong>, from Wikimedia Commons.`
+    : `Claude's picks for each spot in the article. Every file is <strong>public domain</strong>, from Wikimedia Commons. Press <strong>Replace</strong> to see the next option, <strong>Remove</strong> to drop a spot, then <strong>Approve</strong> at the bottom.`;
+
+  $("articles").innerHTML = DESK.articles.map(a => {
+    const { min, max } = limits(a);
+    return `
+    <section class="article">
+      <div class="article-head">
+        <div class="spec">${esc(a.date || "")}${a.words ? ` &nbsp;/&nbsp; <b>${a.words}</b> words` : ""} &nbsp;/&nbsp; <b>${min === max ? min : min + " to " + max}</b> images</div>
+        <h2>${esc(a.title)}</h2>
+      </div>
+      <div class="plates">${a.slots.map(s => plateHtml(a, s)).join("")}</div>
+    </section>`;
+  }).join("");
+
+  if (!RECORD) {
+    document.querySelectorAll("[data-act]").forEach(el => el.addEventListener(el.type === "radio" ? "change" : "click", onAct));
+  }
+  $("bar").hidden = RECORD;
+  sync();
+}
+
+function plateHtml(a, s) {
+  const n = s.candidates.length;
+  return `
+  <figure class="plate" id="plate-${a.key}-${s.id}">
+    <div class="shot">
+      <img id="img-${a.key}-${s.id}" alt="" loading="lazy">
+      <span class="tag" id="tag-${a.key}-${s.id}" hidden>THUMBNAIL</span>
+      <div class="newnote" id="new-${a.key}-${s.id}" hidden>Claude will find new options for this spot</div>
+    </div>
+    <figcaption class="caption">
+      <div class="where">Goes: <b>${esc(s.placement || "")}</b></div>
+      <p class="why" id="why-${a.key}-${s.id}"></p>
+      <div class="controls" ${RECORD ? "hidden" : ""}>
+        <button class="btn" type="button" id="rep-${a.key}-${s.id}" data-act="replace" data-art="${a.key}" data-slot="${s.id}">Replace</button>
+        <button class="btn" type="button" id="rem-${a.key}-${s.id}" data-act="remove" data-art="${a.key}" data-slot="${s.id}">Remove</button>
+        <label class="radio" for="thumb-${a.key}-${s.id}">
+          <input type="radio" id="thumb-${a.key}-${s.id}" name="thumb-${a.key}" data-act="thumb" data-art="${a.key}" data-slot="${s.id}">
+          <span>Thumbnail</span>
+        </label>
+        <span class="count" id="count-${a.key}-${s.id}">${n > 1 ? "" : "Only option"}</span>
+      </div>
+      <div class="prov" id="prov-${a.key}-${s.id}"></div>
+    </figcaption>
+  </figure>`;
+}
+
+function onAct(e) {
+  const { act, art, slot } = e.currentTarget.dataset;
+  const a = DESK.articles.find(x => x.key === art);
+  const s = a.slots.find(x => x.id === slot);
+  const st = state[art].slots[slot];
+  if (act === "replace") {
+    if (st.needsNew) { st.needsNew = false; st.idx = 0; }
+    else if (st.idx < s.candidates.length - 1) st.idx++;
+    else st.needsNew = true;
+  } else if (act === "remove") {
+    st.removed = !st.removed;
+    if (st.removed && state[art].thumb === slot) {
+      const next = a.slots.find(x => !state[art].slots[x.id].removed);
+      state[art].thumb = next ? next.id : null;
+    }
+  } else if (act === "thumb") {
+    state[art].thumb = slot;
+  }
+  $("status").textContent = "";
+  sync();
+}
+
+function sync() {
+  DESK.articles.forEach(a => {
+    a.slots.forEach(s => {
+      const st = state[a.key].slots[s.id];
+      const c = s.candidates[st.idx] || s.candidates[0];
+      const k = `${a.key}-${s.id}`;
+      const img = $("img-" + k);
+      if (img.getAttribute("src") !== c.file) { img.src = c.file; img.alt = c.alt || ""; }
+      $("why-" + k).textContent = c.why || "";
+      $("prov-" + k).innerHTML = `<span class="lic">${esc(c.license || "Public domain")}</span> &middot; Wikimedia Commons<br><a href="${esc(commonsUrl(c))}" target="_blank" rel="noopener noreferrer">${esc(c.commons)}</a>`;
+      const isThumb = state[a.key].thumb === s.id && !st.removed;
+      $("tag-" + k).hidden = !isThumb;
+      $("new-" + k).hidden = !st.needsNew;
+      const plate = $("plate-" + k);
+      plate.classList.toggle("is-removed", st.removed);
+      plate.classList.toggle("is-new", st.needsNew);
+      if (RECORD) return;
+      const n = s.candidates.length;
+      const rep = $("rep-" + k);
+      rep.textContent = st.needsNew ? "Undo" : (st.idx < n - 1 ? "Replace" : "Ask for new options");
+      rep.classList.toggle("warn", !st.needsNew && st.idx === n - 1);
+      rep.disabled = st.removed;
+      $("rem-" + k).textContent = st.removed ? "Put back" : "Remove";
+      const radio = $("thumb-" + k);
+      radio.checked = isThumb;
+      radio.disabled = st.removed;
+      $("count-" + k).textContent = n > 1 ? `Option ${st.idx + 1} of ${n}` : "Only option";
+    });
+  });
+  if (!RECORD) tally();
+}
+
+function problems() {
+  const out = [];
+  DESK.articles.forEach(a => {
+    const { min, max } = limits(a);
+    const kept = a.slots.filter(s => !state[a.key].slots[s.id].removed).length;
+    const short = a.title.length > 32 ? a.title.slice(0, 30) + "..." : a.title;
+    if (kept < min) out.push(`${short}: keep at least ${min}`);
+    if (kept > max) out.push(`${short}: at most ${max}`);
+    if (!state[a.key].thumb) out.push(`${short}: pick a thumbnail`);
+  });
+  return out;
+}
+
+const anyNew = () => DESK.articles.some(a => a.slots.some(s => state[a.key].slots[s.id].needsNew));
+
+function tally() {
+  const bad = problems();
+  $("tally").innerHTML = DESK.articles.map(a => {
+    const kept = a.slots.filter(s => !state[a.key].slots[s.id].removed).length;
+    return `<span class="line"><b>${kept}</b> images &nbsp; ${esc(a.title.length > 44 ? a.title.slice(0, 42) + "..." : a.title)}</span>`;
+  }).join("") + (bad.length ? `<span class="line bad">${esc(bad.join(" | "))}</span>` : "");
+  const btn = $("approve");
+  btn.textContent = anyNew() ? "Send back for new options" : "Approve";
+  btn.disabled = bad.length > 0;
+}
+
+function payload() {
+  const articles = {};
+  DESK.articles.forEach(a => {
+    articles[a.key] = {
+      title: a.title,
+      thumbnail: state[a.key].thumb,
+      slots: a.slots.map(s => {
+        const st = state[a.key].slots[s.id];
+        const c = s.candidates[st.idx];
+        return {
+          id: s.id, placement: s.placement || "", anchor: s.anchor || "",
+          removed: st.removed, needsNew: st.needsNew, option: st.idx + 1,
+          commons: c.commons, file: c.file, license: c.license || "", page: c.page || ""
+        };
+      })
+    };
+  });
+  return { deskId: DESK.deskId, status: anyNew() ? "needs-new-options" : "approved", savedAt: new Date().toISOString(), articles };
+}
+
+function restore(saved) {
+  if (!saved || saved.deskId !== DESK.deskId) return;
+  DESK.articles.forEach(a => {
+    const sa = saved.articles?.[a.key];
+    if (!sa) return;
+    (sa.slots || []).forEach(x => {
+      const s = a.slots.find(y => y.id === x.id);
+      if (!s) return;
+      const st = state[a.key].slots[s.id];
+      st.removed = !!x.removed;
+      const i = s.candidates.findIndex(c => c.commons === x.commons);
+      if (i >= 0 && !x.needsNew) st.idx = i;
+    });
+    if (sa.thumbnail && a.slots.some(s => s.id === sa.thumbnail)) state[a.key].thumb = sa.thumbnail;
+  });
+  const when = new Date(saved.savedAt).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
+  $("banner").textContent = saved.status === "approved"
+    ? `Approved ${when}. Changing anything and pressing Approve again replaces that approval.`
+    : `Sent back for new options ${when}. Spots with new options now show them first.`;
+  $("banner").hidden = false;
+  sync();
+}
+
+function setStatus(html, cls) {
+  $("status").innerHTML = html;
+  $("status").className = "status" + (cls ? " " + cls : "");
+}
+
+let dbPromise = null;
+const getDb = () => (dbPromise = dbPromise || (window.claude?.use ? window.claude.use("db").catch(() => null) : Promise.resolve(null)));
+
+$("approve").addEventListener("click", async () => {
+  const btn = $("approve");
+  const data = payload();
+  const word = data.status === "approved" ? "go" : "new options";
+  btn.disabled = true;
+  setStatus("Saving...");
+  let db = null;
+  try { db = await getDb(); } catch { db = null; }
+  if (!db) {
+    $("fallback-text").value = JSON.stringify(data);
+    $("fallback").hidden = false;
+    setStatus(`This page can't save by itself here. Press <b>Copy</b>, go back to Claude, paste it, and send.`, "err");
+    btn.disabled = false;
+    return;
+  }
+  try {
+    await db.doc("desk/decision").set(data);
+    setStatus(`Saved. Go back to Claude and type <kbd>${word}</kbd>`, "saved");
+  } catch (err) {
+    $("fallback-text").value = JSON.stringify(data);
+    $("fallback").hidden = false;
+    setStatus(`Saving failed (${esc(err?.code || "unknown")}). Press <b>Copy</b>, go back to Claude, paste it, and send.`, "err");
+  }
+  btn.disabled = false;
+});
+
+$("copy").addEventListener("click", async () => {
+  const ta = $("fallback-text");
+  try { await navigator.clipboard.writeText(ta.value); }
+  catch { ta.focus(); ta.select(); document.execCommand("copy"); }
+  $("copy").textContent = "Copied";
+});
+
+render();
+
+if (!RECORD) {
+  getDb().then(async db => {
+    if (!db) return;
+    try {
+      const snap = await db.doc("desk/decision").get();
+      if (snap.exists) restore(snap.data());
+    } catch { /* first run: nothing saved yet */ }
+  });
+}
+</script>

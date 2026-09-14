@@ -1,0 +1,48 @@
+{
+  "deskId": "2026-09-20-14-example-slug",
+  "publication": "Roden Eugen",
+  "articles": [
+    {
+      "key": "example-slug",
+      "title": "Why Russia Achieves So Little With So Much",
+      "date": "7 Dec 2025",
+      "words": 922,
+      "minImages": 2,
+      "maxImages": 4,
+      "slots": [
+        {
+          "id": "s1",
+          "placement": "Top of the post",
+          "anchor": "TOP",
+          "thumb": true,
+          "candidates": [
+            {
+              "commons": "Russian woman spinning yarn, Izvedovo village (by Sergei Prokudin-Gorskii, 1910).jpg",
+              "license": "Public domain",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Russian_woman_spinning_yarn%2C_Izvedovo_village_%28by_Sergei_Prokudin-Gorskii%2C_1910%29.jpg/960px-Russian_woman_spinning_yarn%2C_Izvedovo_village_%28by_Sergei_Prokudin-Gorskii%2C_1910%29.jpg",
+              "page": "https://commons.wikimedia.org/wiki/File:Russian_woman_spinning_yarn,_Izvedovo_village_(by_Sergei_Prokudin-Gorskii,_1910).jpg",
+              "alt": "A woman spinning yarn in Izvedovo village, 1910.",
+              "why": "Carries the claim of military might alongside household poverty in one frame."
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "placement": "Above '4. A Cultural Empire With an Inferiority Complex'",
+          "anchor": "4. A Cultural Empire",
+          "thumb": false,
+          "candidates": [
+            {
+              "commons": "L.N.Tolstoy Prokudin-Gorsky.jpg",
+              "license": "Public domain",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/L.N.Tolstoy_Prokudin-Gorsky.jpg/960px-L.N.Tolstoy_Prokudin-Gorsky.jpg",
+              "page": "https://commons.wikimedia.org/wiki/File:L.N.Tolstoy_Prokudin-Gorsky.jpg",
+              "alt": "Leo Tolstoy photographed in colour, 1908.",
+              "why": "Tolstoy is named in the section's first line."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
