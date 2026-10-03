@@ -20,10 +20,11 @@ Edits Eugen R. Lowy's essays into natural English, finds public-domain pictures 
 3. Claude edits the English and shows you what it changed. Say OK.
 4. Claude sends a **Picture Desk** link with a picture for each spot in the article:
    - **Replace** shows the next option.
+   - **Find more** asks Claude to search again for that spot.
    - **Remove** drops that spot.
    - **Thumbnail** picks the preview image.
-   - **Approve** saves your choices.
-5. Go back to Claude and type **go**. It publishes the post to the web only. No email goes to subscribers.
+   - **Approve** saves your choices and sends them to Claude.
+5. Claude publishes the post to the web only and replies on the desk when it's done. No email goes to subscribers. (If the desk says so, go back to Claude and type **go** instead.)
 
 ## What's inside
 

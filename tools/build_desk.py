@@ -2,14 +2,15 @@
 """Build a Picture Desk page from an article folder's manifest.json.
 
 Usage:
-  python3 tools/build_desk.py articles/<folder>                       # review desk (Replace / Approve)
+  python3 tools/build_desk.py articles/<folder>                       # review desk (Replace / Find more / Approve)
   python3 tools/build_desk.py articles/<folder> --mode record \
           --decision articles/<folder>/decision.json                  # read-only record of the final picks
 
 Downloads every candidate image into <folder>/desk/img/, then writes:
   <folder>/desk/artifact.html   publish this with the Artifact tool (root = <folder>/desk)
   <folder>/desk/index.html      standalone copy (Cloudflare Pages or a browser)
-Prints JSON with the Artifact `files` map and any warnings.
+Prints JSON with the Artifact `files` map, the `capabilities` to declare, and any warnings.
+A review desk needs `db` (saves the decision) and `comments` (Find more and Approve send it to Claude).
 """
 import argparse
 import copy
@@ -119,8 +120,9 @@ def main():
         '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n' + html + "\n</html>\n")
 
+    capabilities = {"db": {}, "comments": {}} if args.mode == "review" else {}
     print(json.dumps({"artifact_file": str(out / "artifact.html"), "root": str(out),
-                      "files": files, "warnings": warnings}, indent=2))
+                      "files": files, "capabilities": capabilities, "warnings": warnings}, indent=2))
 
 
 if __name__ == "__main__":

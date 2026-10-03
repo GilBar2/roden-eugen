@@ -209,6 +209,7 @@ function plateHtml(a, s) {
       <div class="controls" ${RECORD ? "hidden" : ""}>
         <button class="btn" type="button" id="rep-${a.key}-${s.id}" data-act="replace" data-art="${a.key}" data-slot="${s.id}">Replace</button>
         <button class="btn" type="button" id="rem-${a.key}-${s.id}" data-act="remove" data-art="${a.key}" data-slot="${s.id}">Remove</button>
+        <button class="btn" type="button" id="find-${a.key}-${s.id}" data-act="find" data-art="${a.key}" data-slot="${s.id}" hidden>Find more</button>
         <label class="radio" for="thumb-${a.key}-${s.id}">
           <input type="radio" id="thumb-${a.key}-${s.id}" name="thumb-${a.key}" data-act="thumb" data-art="${a.key}" data-slot="${s.id}">
           <span>Thumbnail</span>
@@ -237,6 +238,11 @@ function onAct(e) {
     }
   } else if (act === "thumb") {
     state[art].thumb = slot;
+  } else if (act === "find") {
+    st.needsNew = true;
+    sync();
+    submit(`Find new pictures for "${a.title}", ${s.placement}.`, e.currentTarget.closest(".plate"));
+    return;
   }
   $("status").textContent = "";
   sync();
@@ -265,6 +271,9 @@ function sync() {
       rep.classList.toggle("warn", !st.needsNew && st.idx === n - 1);
       rep.disabled = st.removed;
       $("rem-" + k).textContent = st.removed ? "Put back" : "Remove";
+      const find = $("find-" + k);
+      find.hidden = !canSend || st.removed;
+      find.disabled = busy;
       const radio = $("thumb-" + k);
       radio.checked = isThumb;
       radio.disabled = st.removed;
@@ -297,7 +306,7 @@ function tally() {
   }).join("") + (bad.length ? `<span class="line bad">${esc(bad.join(" | "))}</span>` : "");
   const btn = $("approve");
   btn.textContent = anyNew() ? "Send back for new options" : "Approve";
-  btn.disabled = bad.length > 0;
+  btn.disabled = bad.length > 0 || busy;
 }
 
 function payload() {
@@ -351,31 +360,76 @@ function setStatus(html, cls) {
 let dbPromise = null;
 const getDb = () => (dbPromise = dbPromise || (window.claude?.use ? window.claude.use("db").catch(() => null) : Promise.resolve(null)));
 
-$("approve").addEventListener("click", async () => {
-  const btn = $("approve");
+// Sending to Claude: the comments capability can post a comment that wakes the Claude
+// session watching this desk, so Eugen never has to go back and type. Without a
+// watching session the desk falls back to "go back to Claude and type ...".
+let commentsPromise = null;
+const getComments = () => (commentsPromise = commentsPromise || (window.claude?.use ? window.claude.use("comments").catch(() => null) : Promise.resolve(null)));
+let canSend = false;
+let busy = false;
+
+async function refreshCanSend() {
+  if (RECORD) return;
+  const c = await getComments();
+  let v = "off";
+  if (c) { try { v = await c.canSendToClaude(); } catch { v = "off"; } }
+  canSend = v === "available";
+  sync();
+}
+
+async function sendToClaude(text, el) {
+  const c = await getComments();
+  if (!c) return "unavailable";
+  try {
+    await c.sendToClaude({ anchor: await c.anchorFor(el), text });
+    return "sent";
+  } catch (err) {
+    return err?.code || "upstream_error";
+  }
+}
+
+async function submit(text, el) {
+  if (busy) return;
   const data = payload();
   const word = data.status === "approved" ? "go" : "new options";
-  btn.disabled = true;
+  busy = true;
+  sync();
   setStatus("Saving...");
   let db = null;
   try { db = await getDb(); } catch { db = null; }
-  if (!db) {
-    $("fallback-text").value = JSON.stringify(data);
-    $("fallback").hidden = false;
-    setStatus(`This page can't save by itself here. Press <b>Copy</b>, go back to Claude, paste it, and send.`, "err");
-    btn.disabled = false;
-    return;
-  }
   try {
+    if (!db) throw { code: "no_db" };
     await db.doc("desk/decision").set(data);
-    setStatus(`Saved. Go back to Claude and type <kbd>${word}</kbd>`, "saved");
   } catch (err) {
     $("fallback-text").value = JSON.stringify(data);
     $("fallback").hidden = false;
-    setStatus(`Saving failed (${esc(err?.code || "unknown")}). Press <b>Copy</b>, go back to Claude, paste it, and send.`, "err");
+    setStatus(err?.code === "no_db"
+      ? `This page can't save by itself here. Press <b>Copy</b>, go back to Claude, paste it, and send.`
+      : `Saving failed (${esc(err?.code || "unknown")}). Press <b>Copy</b>, go back to Claude, paste it, and send.`, "err");
+    busy = false;
+    sync();
+    return;
   }
-  btn.disabled = false;
+  const sent = canSend ? await sendToClaude(`${text}\n\nPicture Desk ${DESK.deskId}: choices saved (${data.status}).`, el) : "off";
+  if (sent === "sent") {
+    setStatus(data.status === "approved"
+      ? `Sent to Claude. Claude will publish and reply in a comment here when it's done.`
+      : `Sent to Claude. Claude will reply in a comment here when the new pictures are ready.`, "saved");
+  } else if (sent === "consent_required") {
+    setStatus(`Saved. To send it to Claude from here, allow this page to comment for you, then press again. Or go back to Claude and type <kbd>${word}</kbd>`, "err");
+  } else {
+    setStatus(`Saved. Go back to Claude and type <kbd>${word}</kbd>`, "saved");
+  }
+  busy = false;
+  refreshCanSend();
+}
+
+$("approve").addEventListener("click", () => {
+  const data = payload();
+  submit(data.status === "approved" ? "Pictures approved. Please publish." : "Please find new pictures for the spots I marked.", $("bar"));
 });
+
+document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshCanSend(); });
 
 $("copy").addEventListener("click", async () => {
   const ta = $("fallback-text");
@@ -387,6 +441,7 @@ $("copy").addEventListener("click", async () => {
 render();
 
 if (!RECORD) {
+  refreshCanSend();
   getDb().then(async db => {
     if (!db) return;
     try {
